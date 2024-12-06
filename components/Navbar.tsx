@@ -1,42 +1,55 @@
-import { UserButton, SignInButton, SignUpButton } from '@clerk/nextjs';
+import {
+  UserButton,
+  SignInButton,
+  SignUpButton,
+  OrganizationSwitcher,
+} from '@clerk/nextjs';
 import { auth } from '@clerk/nextjs/server';
 import Link from 'next/link';
-export default function Navbar() {
-   const { userId } = auth();
-   return (
-      <nav className="flex items-center justify-between bg-gray-800 text-white p-2">
-         <Link href="/">
-            <h1 className="font-bold">SJFC</h1>
-         </Link>
+export default async function Navbar() {
+  const { userId } = await auth();
+  if (!userId)
+    return (
+      <nav className='flex items-center justify-between bg-gray-800 text-white p-2'>
+        <Link href='/'>
+          <h1 className='font-bold'>SJFC</h1>
+        </Link>
 
-         <div className="flex ml-auto items-center gap-4">
-            {!userId && (
-               <>
-                  {/* <Link
-                     href="/sign-in"
-                     className="text-white underline hover:text-green-200"
-                  >
-                     Sign In
-                  </Link> */}
-                  <SignInButton mode="modal" forceRedirectUrl="/dashboard" />
+        <div className='flex ml-auto items-center gap-4'>
+          <SignInButton mode='modal' forceRedirectUrl='/dashboard' />
 
-                  {/* <Link
-                     href="/sign-up"
-                     className="text-white underline hover:text-green-200"
-                  >
-                     Sign Up
-                  </Link> */}
-                  <SignUpButton
-                     mode="modal"
-                     forceRedirectUrl="/dashboard"
-                     fallbackRedirectUrl="/"
-                  />
-               </>
-            )}
-            <div className="flex items-center justify-end">
-               {userId && <UserButton />}
-            </div>
-         </div>
+          <SignUpButton
+            mode='modal'
+            forceRedirectUrl='/dashboard'
+            fallbackRedirectUrl='/'
+          />
+        </div>
       </nav>
-   );
+    );
+  else {
+    return (
+      <nav className='flex items-center justify-between bg-gray-800 text-white p-1'>
+        <div>
+          <UserButton
+            appearance={{
+              elements: {
+                userButtonAvatarBox: {
+                  height: 50,
+                  width: 50,
+                },
+              },
+            }}
+          />
+        </div>
+        <div className='flex gap-4'>
+          <Link href='/' className='font-bold justify-self-end'>
+            SJFC
+          </Link>
+          <Link className='font-bold' href='/dashboard'>
+            Dashboard
+          </Link>
+        </div>
+      </nav>
+    );
+  }
 }
