@@ -4,8 +4,8 @@ export default function Onboarding() {
       <h1 className='font-bold text-xl'>Onboarding into SJFC!</h1>
       <h3>
         {' '}
-        Below we'll be asking you a series of questions to get a better idea of
-        what kind of player you are.{' '}
+        Below we&apos;ll be asking you a series of questions to get a better
+        idea of what kind of player you are.{' '}
       </h3>
     </div>
   );
