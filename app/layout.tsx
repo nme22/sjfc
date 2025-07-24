@@ -15,9 +15,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider dynamic>
+    <ClerkProvider
+      appearance={{
+        layout: {
+          // termsPageUrl: '/terms2',
+        },
+      }}
+    >
       <html lang='en'>
-        <body className='flex flex-col min-h-screen bg-gradient-to-t from-blue-950 to-gray-800 h-screen text-white'>
+        <body className='flex flex-col min-h-screen '>
           <Navbar />
           <main>{children}</main>
           <Footer />

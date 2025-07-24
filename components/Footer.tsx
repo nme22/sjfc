@@ -2,16 +2,23 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className='bg-blue-950 text-white p-4 mt-auto'>
-      <div className='container mx-auto flex justify-evenly items-center'>
-        <Link href='/'>Twitter</Link>
-        <Link href='/'>Github</Link>
-        <Link href='/'>Meetup</Link>
+    <footer className='bg-blue-900 text-white border-t-2 border-black py-6 fixed bottom-0 left-0 w-full'>
+      <div className='max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0'>
+        <div className='flex space-x-6'>
+          <Link href='/' className='hover:text-gray-300 transition'>
+            Instagram
+          </Link>
+          <Link href='/' className='hover:text-gray-300 transition'>
+            GitHub
+          </Link>
+          <Link href='/' className='hover:text-gray-300 transition'>
+            Casa Soccer League
+          </Link>
+        </div>
+        <p className='text-sm font-mono'>
+          &copy; {new Date().getFullYear()} SJFC. All rights reserved.
+        </p>
       </div>
-      <br />
-      <p className='text-center font-mono font-light'>
-        All rights to this website are secured by SJFC
-      </p>
     </footer>
   );
 }
