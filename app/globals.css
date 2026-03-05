@@ -196,8 +196,8 @@
   animation: ember-rise 1s ease-out infinite;
 }
 
-/* Smooth theme transition */
-* {
+/* Smooth theme transition — exclude Clerk components */
+*:not([class^="cl-"]):not([class*=" cl-"]):not([data-clerk]) {
   transition-property: background-color, color, border-color, box-shadow;
   transition-duration: 0.3s;
   transition-timing-function: ease;
