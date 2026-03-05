@@ -1,16 +1,11 @@
-import { OrganizationSwitcher } from '@clerk/nextjs';
-
 export default function Dashboard() {
   return (
     <div className='min-h-screen bg-gray-50'>
       <div className='max-w-6xl mx-auto px-6 py-12'>
         {/* Header */}
-        <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10'>
-          <div>
-            <h1 className='text-3xl font-extrabold text-navy-900'>Dashboard</h1>
-            <p className='text-gray-500 mt-1'>Welcome back to SJFC</p>
-          </div>
-          <OrganizationSwitcher />
+        <div className='mb-10'>
+          <h1 className='text-3xl font-extrabold text-navy-900'>Dashboard</h1>
+          <p className='text-gray-500 mt-1'>Welcome back to SJFC</p>
         </div>
 
         {/* Cards Grid */}
@@ -22,10 +17,10 @@ export default function Dashboard() {
               <h2 className='text-xl font-bold text-navy-900'>Season Schedule</h2>
             </div>
             <iframe
-              className='w-full rounded-lg'
+              className='w-full rounded-lg min-h-[70vh] md:min-h-[600px]'
               src='https://season-microsites.ui.sportsengine.com/seasons/6978cd52226da93f7a6e6c15/schedule2?embed=true&noNav=true&link=063464&accent=828382'
               allow='clipboard-write'
-              style={{ border: 'none', minHeight: '600px' }}
+              style={{ border: 'none' }}
             />
           </div>
 

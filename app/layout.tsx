@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ThemeProvider from '@/components/ThemeProvider';
 import './globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
 
@@ -22,11 +23,13 @@ export default function RootLayout({
         },
       }}
     >
-      <html lang='en'>
-        <body className='flex flex-col min-h-screen '>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
+      <html lang='en' data-theme='dark'>
+        <body className='flex flex-col min-h-screen theme-bg theme-text'>
+          <ThemeProvider>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

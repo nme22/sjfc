@@ -15,6 +15,14 @@ const config: Config = {
           700: '#162d54',
           600: '#1e3a6e',
         },
+        cyber: {
+          black: '#060a10',
+          dark: '#0c1220',
+          panel: '#121c30',
+          accent: '#4a7dff',
+          light: '#ffffff',
+          muted: '#8ba3cc',
+        },
       },
       animation: {
         'fade-in-up': 'fade-in-up 0.8s ease-out forwards',

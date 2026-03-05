@@ -2,126 +2,141 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <main>
+    <main className='theme-bg theme-text'>
       {/* Hero Section */}
-      <section className='relative min-h-screen flex items-center justify-center bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700 overflow-hidden'>
-        {/* Background pattern */}
-        <div
-          className='absolute inset-0 opacity-10'
-          style={{
-            backgroundImage:
-              'radial-gradient(circle, #ffffff 1px, transparent 1px)',
-            backgroundSize: '40px 40px',
-          }}
-        />
+      <section className='relative min-h-screen flex items-center justify-center overflow-hidden scanlines theme-bg'>
+        <div className='absolute inset-0 cyber-grid' />
+        <div className='absolute inset-0' style={{ background: 'linear-gradient(to bottom, var(--color-bg), transparent, var(--color-bg))' }} />
+        <div className='absolute bottom-0 left-0 right-0 h-px divider-pulse' style={{ background: 'linear-gradient(to right, transparent, var(--color-accent), transparent)' }} />
+
+        {/* Floating neon accent lines */}
+        <div className='absolute top-[30%] left-0 w-full h-px overflow-hidden'>
+          <div className='h-full w-32 neon-line-slide' style={{ background: 'linear-gradient(to right, transparent, var(--color-accent), transparent)' }} />
+        </div>
+        <div className='absolute top-[70%] left-0 w-full h-px overflow-hidden'>
+          <div className='h-full w-24 neon-line-slide' style={{ background: 'linear-gradient(to right, transparent, var(--color-text-muted), transparent)', animationDelay: '2s' }} />
+        </div>
 
         <div className='relative z-10 text-center px-6 animate-fade-in-up'>
-          <h1 className='text-8xl md:text-9xl font-extrabold text-white tracking-widest drop-shadow-lg'>
+          <p className='theme-accent text-sm tracking-[0.5em] uppercase mb-4 animate-flicker font-mono'>
+            // SOUTH JERSEY FOOTBALL CLUB
+          </p>
+          <h1 className='text-6xl sm:text-8xl md:text-[10rem] font-extrabold tracking-widest glitch-text leading-none'>
             SJFC
           </h1>
-          <p className='text-lg md:text-xl text-gray-400 tracking-[0.3em] uppercase mt-2 mb-6'>
-            South Jersey Football Club
-          </p>
-          <div className='w-16 h-1 bg-white mx-auto mb-6' />
-          <p className='text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10'>
+          <div className='flex items-center gap-4 justify-center my-8'>
+            <div className='h-px flex-1 max-w-24' style={{ background: 'linear-gradient(to right, transparent, var(--color-accent))' }} />
+            <span className='theme-text-muted font-mono text-xs tracking-widest'>EST. 2024</span>
+            <div className='h-px flex-1 max-w-24' style={{ background: 'linear-gradient(to left, transparent, var(--color-accent))' }} />
+          </div>
+          <p className='text-lg md:text-xl theme-text-muted max-w-2xl mx-auto mb-10 font-light'>
             Competitive adult soccer in the Burlington County area. Two teams.
-            One mission. Elevating the game.
+            One mission. <span className='theme-text font-medium'>Elevating the game.</span>
           </p>
           <div className='flex flex-col sm:flex-row gap-4 justify-center'>
             <Link
               href='https://www.casasoccerleagues.com/season_management_season_page/tab_schedule?page_node_id=9150307'
-              className='bg-white text-navy-900 px-8 py-3 rounded-full font-bold text-lg hover:bg-gray-100 transition'
+              className='px-8 py-3 font-bold text-lg clip-cyber hover:scale-105 transform transition duration-200 animate-cyber-pulse'
+              style={{ backgroundColor: 'var(--color-btn-primary-bg)', color: 'var(--color-btn-primary-text)' }}
             >
-              View Schedule
+              VIEW SCHEDULE
             </Link>
             <Link
               href='https://www.instagram.com/sjfc_team/'
-              className='border-2 border-white text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-white hover:text-navy-900 transition'
+              className='border px-8 py-3 font-bold text-lg clip-cyber theme-accent transition duration-200'
+              style={{ borderColor: 'var(--color-accent)' }}
             >
-              Follow Us
+              FOLLOW US
             </Link>
           </div>
         </div>
       </section>
 
       {/* About Section */}
-      <section className='bg-white py-20 px-6'>
-        <div className='max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>
+      <section className='relative py-24 px-6 theme-bg-alt'>
+        <div className='absolute top-0 left-0 right-0 h-px divider-pulse' style={{ background: 'linear-gradient(to right, transparent, var(--color-accent), transparent)' }} />
+
+        <div className='max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center'>
           <div>
-            <h2 className='text-4xl font-extrabold text-navy-900 mb-6'>
-              About the Club
+            <p className='theme-accent font-mono text-sm tracking-widest mb-3'>&#47;&#47; ABOUT</p>
+            <h2 className='text-4xl md:text-5xl font-extrabold mb-6'>
+              About the <span className='theme-accent neon-accent'>Club</span>
             </h2>
-            <p className='text-gray-700 text-lg leading-relaxed'>
-              South Jersey Football Club is dedicated to maintaining a high
-              standard of play for adult players in the Burlington County area.
-              The club currently has two competitive teams participating in the
-              CASA soccer league within the Philadelphia area. We are always
-              looking for talented individuals who want to play at a competitive
-              level and help us advance to higher divisions.
+            <p className='theme-text-muted text-lg leading-relaxed'>
+              SJFC was born from a simple idea &mdash; a group of players who
+              wanted more than pickup games. That hunger for competition led
+              us to the CASA league, where our founding squad entered at the
+              seventh division and fought their way up to the fourth in just
+              two seasons. Now fielding two teams across the Burlington County
+              and Philadelphia area, we continue to seek out driven players
+              who share our commitment to competing at the highest level
+              while upholding the sportsmanship that defines this club.
             </p>
           </div>
-          <div className='grid grid-cols-3 gap-4'>
+          <div className='grid grid-cols-3 gap-4 stagger-children'>
             {[
-              { stat: '2', label: 'Teams' },
-              { stat: 'CASA', label: 'League' },
-              { stat: '4 | 7', label: 'Divisions' },
+              { stat: '2', label: 'TEAMS' },
+              { stat: 'CASA', label: 'LEAGUE' },
+              { stat: '4 | 7', label: 'DIVISIONS' },
             ].map((item) => (
               <div
                 key={item.label}
-                className='bg-navy-900 text-white rounded-2xl p-6 text-center'
+                className='theme-panel p-6 text-center clip-cyber cyber-card animate-fade-in-up'
               >
-                <p className='text-3xl font-extrabold'>{item.stat}</p>
-                <p className='text-sm text-gray-300 mt-1'>{item.label}</p>
+                <p className='text-3xl font-extrabold theme-text'>{item.stat}</p>
+                <p className='text-xs theme-text-muted mt-2 font-mono tracking-wider'>{item.label}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Features / Links Section */}
-      <section className='bg-navy-800 py-20 px-6'>
-        <div className='max-w-6xl mx-auto'>
-          <h2 className='text-4xl font-extrabold text-white text-center mb-12'>
-            Get Involved
-          </h2>
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+      {/* Get Involved Section */}
+      <section className='relative py-24 px-6 theme-bg overflow-hidden'>
+        <div className='absolute inset-0 cyber-grid' />
+        <div className='absolute top-0 left-0 right-0 h-px divider-pulse' style={{ background: 'linear-gradient(to right, transparent, var(--color-accent), transparent)' }} />
+
+        <div className='relative max-w-6xl mx-auto'>
+          <div className='text-center mb-16'>
+            <p className='theme-accent font-mono text-sm tracking-widest mb-3'>&#47;&#47; CONNECT</p>
+            <h2 className='text-4xl md:text-5xl font-extrabold'>
+              Get <span className='theme-accent neon-accent'>Involved</span>
+            </h2>
+          </div>
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-6 stagger-children'>
             {[
               {
-                icon: '📸',
                 title: 'Community',
                 desc: 'Follow us on Instagram for updates, highlights, and behind-the-scenes content.',
                 link: 'https://www.instagram.com/sjfc_team/',
-                linkText: 'Follow on Instagram',
+                linkText: 'Instagram',
               },
               {
-                icon: '📅',
                 title: 'Schedule',
                 desc: 'Stay updated on upcoming matches, locations, and game-day details.',
                 link: 'https://www.casasoccerleagues.com/season_management_season_page/tab_schedule?page_node_id=9150307',
                 linkText: 'View Schedule',
               },
               {
-                icon: '🎬',
                 title: 'YouTube',
                 desc: 'Watch match recaps, highlights, and exclusive club content.',
                 link: 'https://youtube.com',
-                linkText: 'Watch on YouTube',
+                linkText: 'Watch Now',
               },
             ].map((f) => (
               <div
                 key={f.title}
-                className='bg-white border-l-4 border-navy-600 rounded-xl p-6 shadow-md hover:-translate-y-2 hover:shadow-xl transform transition duration-300'
+                className='theme-panel p-6 cyber-card clip-cyber animate-fade-in-up'
               >
-                <span className='text-4xl block mb-4'>{f.icon}</span>
-                <h3 className='text-2xl font-bold text-navy-900 mb-2'>
+                <h3 className='text-xl font-bold mb-2 theme-text'>
                   {f.title}
                 </h3>
-                <p className='text-gray-600 mb-4'>{f.desc}</p>
+                <p className='theme-text-muted text-sm mb-5 leading-relaxed'>{f.desc}</p>
                 <Link
                   href={f.link}
-                  className='text-navy-700 font-semibold hover:text-navy-900 transition inline-flex items-center gap-1'
+                  className='theme-accent font-mono text-sm tracking-wider hover:underline inline-flex items-center gap-2 group'
                 >
-                  {f.linkText} &rarr;
+                  [{f.linkText}] <span className='group-hover:translate-x-1 transition-transform'>&rarr;</span>
                 </Link>
               </div>
             ))}
@@ -130,20 +145,27 @@ export default function Home() {
       </section>
 
       {/* CTA Banner */}
-      <section className='bg-navy-900 py-20 px-6 text-center'>
-        <h2 className='text-4xl md:text-5xl font-extrabold text-white mb-4'>
-          Ready to Play?
-        </h2>
-        <p className='text-gray-300 text-lg mb-8 max-w-xl mx-auto'>
-          We&apos;re always looking for talented players to join the squad.
-          Sign up and take your game to the next level.
-        </p>
-        <Link
-          href='/sign-in'
-          className='bg-white text-navy-900 px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition'
-        >
-          Join SJFC
-        </Link>
+      <section className='relative py-24 px-6 text-center theme-bg-alt overflow-hidden scanlines'>
+        <div className='absolute top-0 left-0 right-0 h-px divider-pulse' style={{ background: 'linear-gradient(to right, transparent, var(--color-accent), transparent)' }} />
+        <div className='absolute inset-0 cyber-grid' />
+
+        <div className='relative z-10'>
+          <p className='theme-accent font-mono text-sm tracking-widest mb-3 animate-flicker'>&#47;&#47; JOIN THE SQUAD</p>
+          <h2 className='text-4xl md:text-6xl font-extrabold mb-4'>
+            Ready to <span className='theme-accent neon-accent'>Play</span>?
+          </h2>
+          <p className='theme-text-muted text-lg mb-10 max-w-xl mx-auto'>
+            We&apos;re always looking for talented players to join the squad.
+            Sign up and take your game to the next level.
+          </p>
+          <Link
+            href='/sign-in'
+            className='inline-block px-12 py-4 font-bold text-lg clip-cyber hover:scale-105 transform transition duration-200 animate-cyber-pulse'
+            style={{ backgroundColor: 'var(--color-btn-primary-bg)', color: 'var(--color-btn-primary-text)' }}
+          >
+            JOIN SJFC
+          </Link>
+        </div>
       </section>
     </main>
   );
