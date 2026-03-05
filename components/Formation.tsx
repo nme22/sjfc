@@ -83,6 +83,19 @@ const formationNames: FormationName[] = ['4-3-3', '4-4-2', '3-5-2', '4-2-3-1', '
 export function useFormation() {
   const [active, setActive] = useState<FormationName>('4-3-3');
   const [assignments, setAssignments] = useState<Record<string, string>>({});
+  // Load saved formation from org metadata
+  useEffect(() => {
+    fetch('/api/formation')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.formation) {
+          setActive(data.formation.active || '4-3-3');
+          setAssignments(data.formation.assignments || {});
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   return { active, setActive, assignments, setAssignments };
 }
 
@@ -90,10 +103,12 @@ export function FormationControls({
   active,
   setActive,
   onReset,
+  onSave,
 }: {
   active: FormationName;
   setActive: (f: FormationName) => void;
   onReset: () => void;
+  onSave: () => void;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [indicatorStyle, setIndicatorStyle] = useState<{ left: number; width: number }>({ left: 0, width: 0 });
@@ -109,62 +124,88 @@ export function FormationControls({
   }, [active]);
 
   return (
-    <div className='flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full'>
-      <div
-        ref={containerRef}
-        className='relative flex rounded-lg overflow-hidden'
-        style={{ border: '1px solid var(--color-border-strong)', backgroundColor: 'var(--color-bg)' }}
-      >
-        {/* Sliding neon indicator */}
+    <div className='flex flex-col gap-3 w-full'>
+      {/* Formation tabs — scrollable on mobile */}
+      <div className='overflow-x-auto -mx-1 px-1'>
         <div
-          className='absolute top-0 bottom-0 rounded-lg pointer-events-none'
-          style={{
-            left: indicatorStyle.left,
-            width: indicatorStyle.width,
-            backgroundColor: 'var(--color-accent)',
-            boxShadow: '0 0 12px var(--color-glow), 0 0 24px var(--color-glow), inset 0 0 8px rgba(255,255,255,0.1)',
-            transition: 'left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-            zIndex: 0,
-          }}
-        />
-        {formationNames.map((name) => (
-          <button
-            key={name}
-            data-formation={name}
-            onClick={() => setActive(name)}
-            className='relative z-10 px-3 py-1.5 font-mono text-xs sm:text-sm cursor-pointer'
+          ref={containerRef}
+          className='relative inline-flex rounded-lg overflow-hidden'
+          style={{ border: '1px solid var(--color-border-strong)', backgroundColor: 'var(--color-bg)' }}
+        >
+          {/* Sliding neon indicator */}
+          <div
+            className='absolute top-0 bottom-0 rounded-lg pointer-events-none'
             style={{
-              color: active === name ? '#fff' : 'var(--color-text-muted)',
-              fontWeight: active === name ? 700 : 400,
-              transition: 'color 0.3s ease, font-weight 0.3s ease',
-              textShadow: active === name ? '0 0 8px rgba(255,255,255,0.4)' : 'none',
+              left: indicatorStyle.left,
+              width: indicatorStyle.width,
+              backgroundColor: 'var(--color-accent)',
+              boxShadow: '0 0 12px var(--color-glow), 0 0 24px var(--color-glow), inset 0 0 8px rgba(255,255,255,0.1)',
+              transition: 'left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              zIndex: 0,
             }}
-          >
-            {name}
-          </button>
-        ))}
+          />
+          {formationNames.map((name) => (
+            <button
+              key={name}
+              data-formation={name}
+              onClick={() => setActive(name)}
+              className='relative z-10 px-2.5 py-1.5 font-mono text-xs sm:text-sm cursor-pointer whitespace-nowrap'
+              style={{
+                color: active === name ? '#fff' : 'var(--color-text-muted)',
+                fontWeight: active === name ? 700 : 400,
+                transition: 'color 0.3s ease, font-weight 0.3s ease',
+                textShadow: active === name ? '0 0 8px rgba(255,255,255,0.4)' : 'none',
+              }}
+            >
+              {name}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <button
-        onClick={onReset}
-        className='px-3 py-1.5 font-mono text-xs sm:text-sm cursor-pointer rounded-lg'
-        style={{
-          color: '#ff4444',
-          border: '1px solid rgba(255,68,68,0.3)',
-          backgroundColor: 'var(--color-bg)',
-          transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.borderColor = 'rgba(255,68,68,0.6)';
-          e.currentTarget.style.boxShadow = '0 0 10px rgba(255,68,68,0.2)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.borderColor = 'rgba(255,68,68,0.3)';
-          e.currentTarget.style.boxShadow = 'none';
-        }}
-      >
-        Reset
-      </button>
+      {/* Save & Reset */}
+      <div className='flex gap-2'>
+        <button
+          onClick={onSave}
+          className='flex-1 sm:flex-none px-3 py-1.5 font-mono text-xs sm:text-sm cursor-pointer rounded-lg'
+          style={{
+            color: 'var(--color-accent)',
+            border: '1px solid var(--color-border-strong)',
+            backgroundColor: 'var(--color-bg)',
+            transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = 'var(--color-accent)';
+            e.currentTarget.style.boxShadow = '0 0 10px var(--color-glow)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = 'var(--color-border-strong)';
+            e.currentTarget.style.boxShadow = 'none';
+          }}
+        >
+          Save
+        </button>
+        <button
+          onClick={onReset}
+          className='flex-1 sm:flex-none px-3 py-1.5 font-mono text-xs sm:text-sm cursor-pointer rounded-lg'
+          style={{
+            color: '#ff4444',
+            border: '1px solid rgba(255,68,68,0.3)',
+            backgroundColor: 'var(--color-bg)',
+            transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = 'rgba(255,68,68,0.6)';
+            e.currentTarget.style.boxShadow = '0 0 10px rgba(255,68,68,0.2)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = 'rgba(255,68,68,0.3)';
+            e.currentTarget.style.boxShadow = 'none';
+          }}
+        >
+          Reset
+        </button>
+      </div>
     </div>
   );
 }

@@ -5,6 +5,14 @@ import Formation, { FormationControls, useFormation } from '@/components/Formati
 export default function DashboardClient({ isAdmin }: { isAdmin: boolean }) {
   const { active, setActive, assignments, setAssignments } = useFormation();
 
+  const handleSave = () => {
+    fetch('/api/formation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ active, assignments }),
+    });
+  };
+
   return (
     <div className='min-h-screen theme-bg theme-text'>
       <div className='max-w-7xl mx-auto px-6 py-12'>
@@ -35,7 +43,7 @@ export default function DashboardClient({ isAdmin }: { isAdmin: boolean }) {
             <div className='flex flex-col gap-4 mb-6'>
               <span className='theme-accent font-mono text-sm tracking-wider'>[ FORMATION ]</span>
               {isAdmin && (
-                <FormationControls active={active} setActive={setActive} onReset={() => setAssignments({})} />
+                <FormationControls active={active} setActive={setActive} onReset={() => setAssignments({})} onSave={handleSave} />
               )}
             </div>
             <Formation active={active} assignments={assignments} setAssignments={setAssignments} editable={isAdmin} />
