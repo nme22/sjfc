@@ -13,7 +13,7 @@ export default async function Navbar() {
   const { userId } = await auth();
 
   return (
-    <nav className='relative theme-bg theme-text py-3 px-6' style={{ borderBottom: '1px solid var(--color-border)' }}>
+    <nav className='relative z-50 theme-bg theme-text py-3 px-6' style={{ borderBottom: '1px solid var(--color-border)' }}>
       <div className='w-full flex items-center justify-between'>
         {/* Left: Logo (theme toggle) + Org Switcher */}
         <div className='flex items-center gap-4'>
