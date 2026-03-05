@@ -9,22 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.12.12",
-    "@supabase/supabase-js": "^2.49.8",
-    "autoprefixer": "^10.4.20",
-    "next": "15.0.7",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "@clerk/nextjs": "^7.0.1",
+    "@supabase/supabase-js": "^2.98.0",
+    "autoprefixer": "^10.4.27",
+    "next": "^16.1.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.5",
-    "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.16",
-    "typescript": "^5"
+    "@tailwindcss/postcss": "^4.2.1",
+    "@types/node": "^25.3.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^10.0.2",
+    "eslint-config-next": "16.1.6",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.1",
+    "typescript": "^5.9.3"
   },
   "packageManager": "pnpm@9.7.0+sha512.dc09430156b427f5ecfc79888899e1c39d2d690f004be70e05230b72cb173d96839587545d09429b55ac3c429c801b4dc3c0e002f653830a420fa2dd4e3cf9cf"
 }
