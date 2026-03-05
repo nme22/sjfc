@@ -1,9 +1,31 @@
 'use client';
 
+import { useEffect, useRef, useCallback } from 'react';
 import Formation, { FormationControls, useFormation } from '@/components/Formation';
 
 export default function DashboardClient({ isAdmin }: { isAdmin: boolean }) {
-  const { active, setActive, assignments, setAssignments } = useFormation();
+  const { active, setActive, assignments, setAssignments, loaded } = useFormation();
+  const saveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const saveFormation = useCallback((formationName: string, formationAssignments: Record<string, string>) => {
+    fetch('/api/formation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ active: formationName, assignments: formationAssignments }),
+    });
+  }, []);
+
+  // Auto-save when admin changes formation or assignments (debounced)
+  useEffect(() => {
+    if (!isAdmin || !loaded) return;
+    if (saveTimeout.current) clearTimeout(saveTimeout.current);
+    saveTimeout.current = setTimeout(() => {
+      saveFormation(active, assignments);
+    }, 1000);
+    return () => {
+      if (saveTimeout.current) clearTimeout(saveTimeout.current);
+    };
+  }, [active, assignments, isAdmin, loaded, saveFormation]);
 
   return (
     <div className='min-h-screen theme-bg theme-text'>

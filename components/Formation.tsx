@@ -83,7 +83,23 @@ const formationNames: FormationName[] = ['4-3-3', '4-4-2', '3-5-2', '4-2-3-1', '
 export function useFormation() {
   const [active, setActive] = useState<FormationName>('4-3-3');
   const [assignments, setAssignments] = useState<Record<string, string>>({});
-  return { active, setActive, assignments, setAssignments };
+  const [loaded, setLoaded] = useState(false);
+
+  // Load saved formation from org metadata
+  useEffect(() => {
+    fetch('/api/formation')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.formation) {
+          setActive(data.formation.active || '4-3-3');
+          setAssignments(data.formation.assignments || {});
+        }
+        setLoaded(true);
+      })
+      .catch(() => setLoaded(true));
+  }, []);
+
+  return { active, setActive, assignments, setAssignments, loaded };
 }
 
 export function FormationControls({
