@@ -2,11 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import {
-  UserButton,
-  SignInButton,
-  SignUpButton,
-} from '@clerk/nextjs';
+import { UserButton } from '@clerk/nextjs';
 
 export default function MobileMenu({ userId }: { userId: string | null }) {
   const [open, setOpen] = useState(false);
@@ -55,22 +51,22 @@ export default function MobileMenu({ userId }: { userId: string | null }) {
             </>
           ) : (
             <div className='flex flex-col gap-3'>
-              <SignInButton mode='modal' forceRedirectUrl='/dashboard'>
-                <button
-                  className='px-4 py-2 font-semibold clip-cyber transition w-full cursor-pointer'
-                  style={{ backgroundColor: 'var(--color-btn-primary-bg)', color: 'var(--color-btn-primary-text)' }}
-                >
-                  Sign In
-                </button>
-              </SignInButton>
-              <SignUpButton mode='modal' forceRedirectUrl='/dashboard'>
-                <button
-                  className='border px-4 py-2 font-semibold clip-cyber theme-accent transition w-full cursor-pointer'
-                  style={{ borderColor: 'var(--color-accent)' }}
-                >
-                  Sign Up
-                </button>
-              </SignUpButton>
+              <Link
+                href='/sign-in'
+                onClick={() => setOpen(false)}
+                className='px-4 py-2 font-semibold clip-cyber transition w-full cursor-pointer text-center'
+                style={{ backgroundColor: 'var(--color-btn-primary-bg)', color: 'var(--color-btn-primary-text)' }}
+              >
+                Sign In
+              </Link>
+              <Link
+                href='/sign-up'
+                onClick={() => setOpen(false)}
+                className='border px-4 py-2 font-semibold clip-cyber theme-accent transition w-full cursor-pointer text-center'
+                style={{ borderColor: 'var(--color-accent)' }}
+              >
+                Sign Up
+              </Link>
             </div>
           )}
         </div>
