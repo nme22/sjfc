@@ -77,7 +77,7 @@ export default function Home() {
             {[
               { stat: '2', label: 'TEAMS' },
               { stat: 'CASA', label: 'LEAGUE' },
-              { stat: '4 | 7', label: 'DIVISIONS' },
+              { stat: '4 & 7', label: 'DIVISIONS' },
             ].map((item) => (
               <div
                 key={item.label}
