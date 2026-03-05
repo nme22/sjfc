@@ -1,19 +1,212 @@
 @import "tailwindcss";
 @config "../tailwind.config.ts";
 
-@keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+/* === THEME VARIABLES === */
+
+:root,
+[data-theme="dark"] {
+  --color-bg: #060a10;
+  --color-bg-alt: #0c1220;
+  --color-panel: #121c30;
+  --color-text: #ffffff;
+  --color-text-muted: #8ba3cc;
+  --color-accent: #4a7dff;
+  --color-border: rgba(74, 125, 255, 0.1);
+  --color-border-strong: rgba(74, 125, 255, 0.2);
+  --color-btn-primary-bg: #ffffff;
+  --color-btn-primary-text: #060a10;
+  --color-grid-line: rgba(74, 125, 255, 0.03);
+  --color-scanline: rgba(0, 0, 0, 0.1);
+  --color-glow: rgba(74, 125, 255, 0.3);
+  --glitch-a: #4a7dff;
+  --glitch-b: #ffffff;
 }
 
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient-shift 8s ease infinite;
+[data-theme="light"] {
+  --color-bg: #f5f7fa;
+  --color-bg-alt: #ffffff;
+  --color-panel: #e8ecf2;
+  --color-text: #0a1628;
+  --color-text-muted: #4a5568;
+  --color-accent: #2b5cbf;
+  --color-border: rgba(10, 22, 40, 0.1);
+  --color-border-strong: rgba(10, 22, 40, 0.2);
+  --color-btn-primary-bg: #0a1628;
+  --color-btn-primary-text: #ffffff;
+  --color-grid-line: rgba(10, 22, 40, 0.04);
+  --color-scanline: rgba(0, 0, 0, 0.03);
+  --color-glow: rgba(43, 92, 191, 0.2);
+  --glitch-a: #2b5cbf;
+  --glitch-b: #0a1628;
+}
+
+/* Themed backgrounds */
+.theme-bg { background-color: var(--color-bg); }
+.theme-bg-alt { background-color: var(--color-bg-alt); }
+.theme-panel { background-color: var(--color-panel); }
+.theme-text { color: var(--color-text); }
+.theme-text-muted { color: var(--color-text-muted); }
+.theme-accent { color: var(--color-accent); }
+.theme-border { border-color: var(--color-border); }
+
+/* === CYBERPUNK EFFECTS === */
+
+/* Scanline overlay */
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    var(--color-scanline) 2px,
+    var(--color-scanline) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Glitch text effect */
+@keyframes glitch {
+  0%, 100% { text-shadow: 2px 0 var(--glitch-a), -2px 0 var(--glitch-b); }
+  25% { text-shadow: -2px -1px var(--glitch-a), 2px 1px var(--glitch-b); }
+  50% { text-shadow: 1px 2px var(--glitch-a), -1px -2px var(--glitch-b); }
+  75% { text-shadow: -1px 1px var(--glitch-b), 1px -1px var(--glitch-a); }
+}
+
+.glitch-text {
+  animation: glitch 3s ease-in-out infinite;
+}
+
+/* Neon glow */
+.neon-accent {
+  text-shadow: 0 0 7px var(--color-accent), 0 0 20px var(--color-accent), 0 0 40px var(--color-accent);
+}
+
+/* Flicker animation */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  41% { opacity: 1; }
+  42% { opacity: 0.8; }
+  43% { opacity: 1; }
+  45% { opacity: 0.3; }
+  46% { opacity: 1; }
+  50% { opacity: 1; }
+  51% { opacity: 0.6; }
+  52% { opacity: 1; }
+}
+
+.animate-flicker {
+  animation: flicker 4s linear infinite;
+}
+
+/* Grid background */
+.cyber-grid {
+  background-image:
+    linear-gradient(var(--color-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Horizontal neon line */
+@keyframes neon-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100vw); }
+}
+
+.neon-line-slide {
+  animation: neon-slide 4s linear infinite;
+}
+
+/* Pulse glow for buttons */
+@keyframes cyber-pulse {
+  0%, 100% { box-shadow: 0 0 5px var(--color-accent), 0 0 15px var(--color-glow); }
+  50% { box-shadow: 0 0 10px var(--color-accent), 0 0 30px var(--color-glow), 0 0 60px rgba(74, 125, 255, 0.15); }
+}
+
+.animate-cyber-pulse {
+  animation: cyber-pulse 2.5s ease-in-out infinite;
+}
+
+/* Card hover neon effect */
+.cyber-card {
+  transition: all 0.3s ease;
+  border: 1px solid var(--color-border);
+}
+
+.cyber-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 15px var(--color-glow), inset 0 0 15px rgba(74, 125, 255, 0.05);
+  transform: translateY(-4px);
+}
+
+/* Diagonal cut corners */
+.clip-cyber {
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+}
+
+/* Fade in up */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+/* Section divider pulse */
+@keyframes divider-pulse {
+  0%, 100% { opacity: 0.3; filter: blur(0px); }
+  50% { opacity: 1; filter: blur(2px); }
+}
+
+.divider-pulse {
+  animation: divider-pulse 3s ease-in-out infinite;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 150ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 300ms; }
+
+/* Burning logo effect */
+@keyframes burn-flicker {
+  0%, 100% { filter: brightness(1) drop-shadow(0 0 4px #ff4500) drop-shadow(0 -4px 8px #ff8c00); }
+  25% { filter: brightness(1.2) drop-shadow(0 0 6px #ff4500) drop-shadow(0 -6px 12px #ffaa00); }
+  50% { filter: brightness(1.1) drop-shadow(0 0 8px #ff2200) drop-shadow(0 -8px 16px #ff6600); }
+  75% { filter: brightness(1.3) drop-shadow(0 0 5px #ff4500) drop-shadow(0 -5px 10px #ff8c00); }
+}
+
+@keyframes ember-rise {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-30px) scale(0); opacity: 0; }
+}
+
+.burn-effect {
+  animation: burn-flicker 0.8s ease-in-out infinite;
+}
+
+.ember {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #ff6600;
+  animation: ember-rise 1s ease-out infinite;
+}
+
+/* Smooth theme transition */
+* {
+  transition-property: background-color, color, border-color, box-shadow;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+
+/* Opt out for animations that have their own transitions */
+.cyber-card, .clip-cyber, .animate-fade-in-up, .glitch-text, .animate-flicker, .neon-line-slide {
+  transition: none;
+}
+.cyber-card {
+  transition: all 0.3s ease;
 }

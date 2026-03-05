@@ -1,4 +1,3 @@
-// app/components/Navbar.tsx
 import Link from 'next/link';
 import {
   UserButton,
@@ -7,26 +6,33 @@ import {
   OrganizationSwitcher,
 } from '@clerk/nextjs';
 import { auth } from '@clerk/nextjs/server';
+import MobileMenu from './MobileMenu';
+import ThemeLogo from './ThemeLogo';
 
 export default async function Navbar() {
   const { userId } = await auth();
 
   return (
-    <nav className='bg-navy-900 text-white border-b border-navy-700 py-4 px-6'>
+    <nav className='relative theme-bg theme-text py-3 px-6' style={{ borderBottom: '1px solid var(--color-border)' }}>
       <div className='w-full flex items-center justify-between'>
-        {/* Logo */}
-        <Link
-          href='/'
-          className='text-3xl font-extrabold hover:scale-105 transform transition'
-        >
-          SJFC
-        </Link>
+        {/* Left: Logo (theme toggle) + Org Switcher */}
+        <div className='flex items-center gap-4'>
+          <ThemeLogo />
 
-        {/* Desktop Links + Buttons */}
-        <div className='hidden md:flex items-center space-x-6'>
+          {userId && (
+            <div className='hidden md:block pl-4' style={{ borderLeft: '1px solid var(--color-border-strong)' }}>
+              <OrganizationSwitcher />
+            </div>
+          )}
+        </div>
+
+        {/* Right: Desktop Links + Buttons */}
+        <div className='hidden md:flex items-center gap-5'>
           <Link
             href='/'
-            className='text-lg font-medium hover:text-gray-200 transition'
+            className='text-sm font-medium theme-text-muted hover:theme-accent transition cursor-pointer'
+            style={{ color: 'var(--color-text-muted)' }}
+            onMouseOver={undefined}
           >
             Home
           </Link>
@@ -35,34 +41,37 @@ export default async function Navbar() {
             <>
               <Link
                 href='/dashboard'
-                className='text-lg font-medium hover:text-gray-200 transition'
+                className='text-sm font-medium transition cursor-pointer'
+                style={{ color: 'var(--color-text-muted)' }}
               >
                 Dashboard
               </Link>
-              <OrganizationSwitcher
-                appearance={{
-                  elements: {
-                    orgSwitcherBox: { borderRadius: '0.375rem' },
-                  },
-                }}
-              />
               <UserButton />
             </>
           ) : (
-            <>
+            <div className='flex items-center gap-3'>
               <SignInButton mode='modal' forceRedirectUrl='/dashboard'>
-                <button className='bg-white text-navy-900 px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition'>
+                <button
+                  className='text-sm font-semibold transition cursor-pointer'
+                  style={{ color: 'var(--color-text-muted)' }}
+                >
                   Sign In
                 </button>
               </SignInButton>
               <SignUpButton mode='modal' forceRedirectUrl='/dashboard'>
-                <button className='border-2 border-white text-white px-4 py-2 rounded-full font-semibold hover:bg-white hover:text-navy-900 transition'>
+                <button
+                  className='px-4 py-2 text-sm font-semibold clip-cyber transition cursor-pointer'
+                  style={{ backgroundColor: 'var(--color-btn-primary-bg)', color: 'var(--color-btn-primary-text)' }}
+                >
                   Sign Up
                 </button>
               </SignUpButton>
-            </>
+            </div>
           )}
         </div>
+
+        {/* Mobile Menu */}
+        <MobileMenu userId={userId} />
       </div>
     </nav>
   );
