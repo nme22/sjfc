@@ -1,31 +1,17 @@
 'use client';
 
-import { useEffect, useRef, useCallback } from 'react';
 import Formation, { FormationControls, useFormation } from '@/components/Formation';
 
 export default function DashboardClient({ isAdmin }: { isAdmin: boolean }) {
-  const { active, setActive, assignments, setAssignments, loaded } = useFormation();
-  const saveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { active, setActive, assignments, setAssignments } = useFormation();
 
-  const saveFormation = useCallback((formationName: string, formationAssignments: Record<string, string>) => {
+  const handleSave = () => {
     fetch('/api/formation', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ active: formationName, assignments: formationAssignments }),
+      body: JSON.stringify({ active, assignments }),
     });
-  }, []);
-
-  // Auto-save when admin changes formation or assignments (debounced)
-  useEffect(() => {
-    if (!isAdmin || !loaded) return;
-    if (saveTimeout.current) clearTimeout(saveTimeout.current);
-    saveTimeout.current = setTimeout(() => {
-      saveFormation(active, assignments);
-    }, 1000);
-    return () => {
-      if (saveTimeout.current) clearTimeout(saveTimeout.current);
-    };
-  }, [active, assignments, isAdmin, loaded, saveFormation]);
+  };
 
   return (
     <div className='min-h-screen theme-bg theme-text'>
@@ -57,7 +43,7 @@ export default function DashboardClient({ isAdmin }: { isAdmin: boolean }) {
             <div className='flex flex-col gap-4 mb-6'>
               <span className='theme-accent font-mono text-sm tracking-wider'>[ FORMATION ]</span>
               {isAdmin && (
-                <FormationControls active={active} setActive={setActive} onReset={() => setAssignments({})} />
+                <FormationControls active={active} setActive={setActive} onReset={() => setAssignments({})} onSave={handleSave} />
               )}
             </div>
             <Formation active={active} assignments={assignments} setAssignments={setAssignments} editable={isAdmin} />
