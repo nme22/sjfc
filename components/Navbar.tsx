@@ -12,8 +12,8 @@ export default async function Navbar() {
   const { userId } = await auth();
 
   return (
-    <nav className='bg-blue-900 text-white border-b-2 border-black py-4 px-6'>
-      <div className='max-w-7xl mx-auto flex items-center justify-between'>
+    <nav className='bg-navy-900 text-white border-b border-navy-700 py-4 px-6'>
+      <div className='w-full flex items-center justify-between'>
         {/* Logo */}
         <Link
           href='/'
@@ -51,12 +51,12 @@ export default async function Navbar() {
           ) : (
             <>
               <SignInButton mode='modal' forceRedirectUrl='/dashboard'>
-                <button className='bg-white text-blue-900 border-2 border-black px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition'>
+                <button className='bg-white text-navy-900 px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition'>
                   Sign In
                 </button>
               </SignInButton>
               <SignUpButton mode='modal' forceRedirectUrl='/dashboard'>
-                <button className='bg-white text-blue-900 border-2 border-black px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition'>
+                <button className='border-2 border-white text-white px-4 py-2 rounded-full font-semibold hover:bg-white hover:text-navy-900 transition'>
                   Sign Up
                 </button>
               </SignUpButton>

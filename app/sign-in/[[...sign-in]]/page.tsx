@@ -7,7 +7,6 @@ export default function Page() {
         withSignUp={true}
         unsafeMetadata={{ position: ['Center Midfielder'] }}
       />
-      ;
     </div>
   );
 }
